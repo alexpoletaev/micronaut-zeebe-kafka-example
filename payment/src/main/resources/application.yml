@@ -1,3 +1,9 @@
 micronaut:
   application:
     name: payment
+  server:
+    port: 8081
+
+kafka:
+  bootstrap:
+    servers: ${KAFKA_SERVERS:`localhost:9092`}

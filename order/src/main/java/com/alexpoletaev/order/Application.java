@@ -1,4 +1,4 @@
-package com.alexpoletaev;
+package com.alexpoletaev.order;
 
 import io.micronaut.runtime.Micronaut;
 

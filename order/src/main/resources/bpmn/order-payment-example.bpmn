@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1h8n1sh" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Zeebe Modeler" exporterVersion="0.11.0">
+  <bpmn:process id="order-payment-example" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_1kpiyxs</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1kpiyxs" sourceRef="StartEvent_1" targetRef="Activity_08l0kfx" />
+    <bpmn:serviceTask id="Activity_08l0kfx" name="Charge Credit Card">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="charge-credit-card" retries="3" />
+        <zeebe:ioMapping>
+          <zeebe:input source="= cardNumber" target="cardNumber" />
+          <zeebe:input source="= amount" target="amount" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1kpiyxs</bpmn:incoming>
+      <bpmn:outgoing>Flow_0njx766</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0njx766" sourceRef="Activity_08l0kfx" targetRef="Activity_0w5inbj" />
+    <bpmn:receiveTask id="Activity_0w5inbj" name="Wait for transaction ID" messageRef="Message_0i6su2f">
+      <bpmn:incoming>Flow_0njx766</bpmn:incoming>
+      <bpmn:outgoing>Flow_0warqkg</bpmn:outgoing>
+    </bpmn:receiveTask>
+    <bpmn:endEvent id="Event_0izls5l">
+      <bpmn:incoming>Flow_0warqkg</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0warqkg" sourceRef="Activity_0w5inbj" targetRef="Event_0izls5l" />
+  </bpmn:process>
+  <bpmn:message id="Message_0i6su2f" name="transaction-id-received">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="= correlationKey" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="order-payment-example">
+      <bpmndi:BPMNEdge id="Flow_1kpiyxs_di" bpmnElement="Flow_1kpiyxs">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="270" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0njx766_di" bpmnElement="Flow_0njx766">
+        <di:waypoint x="370" y="117" />
+        <di:waypoint x="430" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0warqkg_di" bpmnElement="Flow_0warqkg">
+        <di:waypoint x="530" y="117" />
+        <di:waypoint x="592" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0d94qub_di" bpmnElement="Activity_08l0kfx">
+        <dc:Bounds x="270" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1l8l7vo_di" bpmnElement="Activity_0w5inbj">
+        <dc:Bounds x="430" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0izls5l_di" bpmnElement="Event_0izls5l">
+        <dc:Bounds x="592" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

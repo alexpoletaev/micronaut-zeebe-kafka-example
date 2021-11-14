@@ -1,4 +1,4 @@
-package com.alexpoletaev;
+package com.alexpoletaev.payment;
 
 import io.micronaut.runtime.Micronaut;
 

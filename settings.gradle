@@ -1,0 +1,4 @@
+rootProject.name = 'micronaut-zeebe-kafka-example'
+include 'order'
+include 'payment'
+
