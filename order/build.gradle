@@ -21,7 +21,6 @@ micronaut {
 }
 
 dependencies {
-    //compileOnly(project(':payment'))
     compileOnly("org.projectlombok:lombok:$lombokVersion")
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
     annotationProcessor("io.micronaut:micronaut-http-validation")
@@ -29,6 +28,7 @@ dependencies {
     implementation("io.micronaut:micronaut-runtime")
     implementation("io.micronaut.kafka:micronaut-kafka")
     implementation("javax.annotation:javax.annotation-api")
+    implementation(project(':payment'))
     runtimeOnly("ch.qos.logback:logback-classic")
     implementation("io.micronaut:micronaut-validation")
     implementation("io.camunda:zeebe-client-java:$zeebeVersion")
